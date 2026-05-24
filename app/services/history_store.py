@@ -42,10 +42,26 @@ class HistoryStore:
 
         try:
             normalized_url = self._normalize_db_url(database_url)
-            engine = create_engine(
-                normalized_url, future=True, pool_pre_ping=True
-            )
-            Base.metadata.create_all(engine)
+            try:
+                engine = create_engine(
+                    normalized_url, future=True, pool_pre_ping=True
+                )
+                Base.metadata.create_all(engine)
+            except Exception as e:
+                # If using postgresql and failed, try falling back to pg8000 pure-python driver
+                if "postgresql" in normalized_url and "pg8000" not in normalized_url:
+                    fallback_url = normalized_url.replace("postgresql+psycopg2://", "postgresql+pg8000://")
+                    fallback_url = fallback_url.replace("postgresql://", "postgresql+pg8000://")
+                    engine = create_engine(
+                        fallback_url,
+                        future=True,
+                        pool_pre_ping=True,
+                        connect_args={"sslmode": "require"}
+                    )
+                    Base.metadata.create_all(engine)
+                else:
+                    raise e
+
             self._session_factory = sessionmaker(
                 bind=engine, expire_on_commit=False
             )
@@ -54,6 +70,7 @@ class HistoryStore:
         except Exception as exc:
             self.enabled = False
             self.init_error = str(exc)
+
 
     def save(
         self,
