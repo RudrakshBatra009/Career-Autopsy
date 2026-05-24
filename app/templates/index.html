@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Career Autopsy // Why Careers Silently Fail</title>
+    <meta name="description" content="AI-powered career diagnostic. Analyze salary stagnation probability, burnout risk, automation pressure, promotion ceiling, and industry decline exposure." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/static/css/styles.css" />
+  </head>
+  <body>
+    <div class="grid-overlay"></div>
+
+    <!-- Loading Overlay -->
+    <div id="loading_overlay" class="loading-overlay hidden">
+      <div class="loading-panel">
+        <h3>PERFORMING CAREER AUTOPSY</h3>
+        <p id="loading_stage">Initializing diagnostic engines...</p>
+        <div class="loading-track">
+          <div id="loading_bar" class="loading-bar"></div>
+        </div>
+        <p id="loading_pct" class="loading-pct">0%</p>
+      </div>
+    </div>
+
+    <!-- Hidden element to satisfy app.js verdictEmoji handler without throwing errors -->
+    <span id="verdict_emoji" style="display: none;"></span>
+
+    <!-- Top Bar -->
+    <header class="topbar">
+      <div class="brand">CAREER://<span>AUTOPSY</span></div>
+      <div class="online">DIAGNOSTIC: ONLINE</div>
+    </header>
+
+    <main class="wrap">
+      <!-- Search Shell / Main Dashboard Inputs -->
+      <section class="search-shell reveal">
+        <h1>WHY CAREERS<br />SILENTLY FAIL.</h1>
+        <p class="hero-sub">AI-powered diagnostic of your career path. Enter your parameters to receive an objective, brutally honest viability evaluation.</p>
+
+        <!-- Input Form -->
+        <form id="analyze-form" class="input-panel">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="job_title">> JOB_TITLE *</label>
+              <input id="job_title" name="job_title" type="text" placeholder="e.g. Software Engineer, Product Manager" required minlength="2" />
+            </div>
+            <div class="form-group">
+              <label for="years_of_experience">> YEARS_OF_EXPERIENCE *</label>
+              <input id="years_of_experience" name="years_of_experience" type="number" value="3" min="0" max="60" required />
+            </div>
+            <div class="form-group">
+              <label for="country">> COUNTRY *</label>
+              <input id="country" name="country" type="text" placeholder="e.g. United States, India" required minlength="2" />
+            </div>
+            <div class="form-group">
+              <label for="current_stack">> CURRENT_STACK_OR_SKILLS *</label>
+              <input id="current_stack" name="current_stack" type="text" placeholder="e.g. Python, React, SQL, Project Management" required minlength="2" />
+            </div>
+            <div class="form-group">
+              <label for="current_salary">> CURRENT_SALARY (OPTIONAL)</label>
+              <input id="current_salary" name="current_salary" type="text" placeholder="e.g. $85,000 USD/year or 12 LPA" />
+            </div>
+            <div class="form-group">
+              <label for="work_hours_per_week">> WORK_HOURS_PER_WEEK (OPTIONAL)</label>
+              <input id="work_hours_per_week" name="work_hours_per_week" type="number" placeholder="e.g. 40" min="0" max="168" />
+            </div>
+            <div class="form-group">
+              <label for="company_type">> COMPANY_TYPE (OPTIONAL)</label>
+              <select id="company_type" name="company_type">
+                <option value="">-- Select Company Archetype --</option>
+                <option value="Early-stage Startup">Early-stage Startup</option>
+                <option value="Growth-stage Startup">Growth-stage Startup</option>
+                <option value="Mid-sized Enterprise">Mid-sized Enterprise</option>
+                <option value="FAANG / Big Tech">FAANG / Big Tech</option>
+                <option value="Agency / Consultancy">Agency / Consultancy</option>
+                <option value="Government / Non-profit">Government / Non-profit</option>
+                <option value="Freelance / Self-employed">Freelance / Self-employed</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="career_goals">> CAREER_GOALS (OPTIONAL)</label>
+              <input id="career_goals" name="career_goals" type="text" placeholder="e.g. Transition to management, remain technical specialist" />
+            </div>
+            <div class="form-group full-width">
+              <label for="resume_file">> UPLOAD_RESUME_PDF_OR_TXT (OPTIONAL)</label>
+              <input id="resume_file" name="resume_file" type="file" accept=".pdf,.txt" style="width: 100%; padding: 8px 10px; background: #090d16; border: 1px solid var(--line); color: var(--muted); font-family: var(--font-mono); font-size: 0.85rem;" />
+            </div>
+          </div>
+          <button id="submit-btn" type="submit" class="execute-btn">RUN AUTOPSY DIAGNOSTIC</button>
+        </form>
+
+        <p class="pipeline">Processing pipeline: Gemini AI single-engine intelligence synthesis.</p>
+
+        <!-- Feature Capsules -->
+        <div class="capsules">
+          <article>
+            <div class="capsule-badge badge-danger">SYS_SAL</div>
+            <h3>SALARY & PROGRESSION</h3>
+            <ul>
+              <li>Salary stagnation odds</li>
+              <li>Expected plateau timing</li>
+              <li>Promotion ceiling constraints</li>
+              <li>Market rate dynamics</li>
+            </ul>
+          </article>
+          <article>
+            <div class="capsule-badge badge-success">SYS_STRESS</div>
+            <h3>BURNOUT & CAPACITY</h3>
+            <ul>
+              <li>Workload stress levels</li>
+              <li>Overwork breakdown risk</li>
+              <li>Skills demand pressure</li>
+              <li>Capacity limit warnings</li>
+            </ul>
+          </article>
+          <article>
+            <div class="capsule-badge badge-info">SYS_MARKET</div>
+            <h3>AUTOMATION & MARKET</h3>
+            <ul>
+              <li>AI automation exposure</li>
+              <li>Skills durability rating</li>
+              <li>Local industry decline</li>
+              <li>Role obsolescence markers</li>
+            </ul>
+          </article>
+        </div>
+
+        <!-- History Panel -->
+        <article class="history-panel">
+          <header>
+            <h3>/// RECENT_DIAGNOSTICS</h3>
+            <button id="refresh_history_btn" type="button">REFRESH</button>
+          </header>
+          <ul id="history_list" class="history-list"></ul>
+        </article>
+      </section>
+
+      <!-- Status -->
+      <section id="status" class="status-line" aria-live="polite"></section>
+
+      <!-- Results Dashboard -->
+      <section id="results" class="results hidden">
+        <!-- Headline / Verdict Strip -->
+        <article class="headline-strip reveal">
+          <div class="verdict-main">
+            <h2 id="verdict_text" class="verdict-label">--</h2>
+            <p id="summary_text" class="verdict-summary"></p>
+            
+            <!-- Three Large Readout Indicators -->
+            <div class="readouts-grid">
+              <div class="readout-box">
+                <div class="readout-title">> PEAK_FORECAST</div>
+                <div id="readout_peak" class="readout-content">--</div>
+              </div>
+              <div class="readout-box">
+                <div class="readout-title">> REPLACEMENT_PRESSURE</div>
+                <div id="readout_replacement" class="readout-content">--</div>
+              </div>
+              <div class="readout-box">
+                <div class="readout-title">> RECOMMENDED_PIVOT</div>
+                <div id="readout_pivot" class="readout-content">--</div>
+              </div>
+            </div>
+
+            <div class="result-actions">
+              <button id="copy_share_btn" type="button">COPY SHARE LINK</button>
+              <button id="new_analysis_btn" type="button">NEW DIAGNOSTIC</button>
+            </div>
+          </div>
+          <div class="verdict-stats">
+            <div class="stat-ring">
+              <svg viewBox="0 0 120 120">
+                <circle class="ring-bg" cx="60" cy="60" r="52" />
+                <circle id="stagnation_ring" class="ring-fg ring-danger" cx="60" cy="60" r="52" stroke-dasharray="326.73" stroke-dashoffset="326.73" />
+              </svg>
+              <div class="ring-label">
+                <strong id="stagnation_value">--%</strong>
+                <span>STAGNATION</span>
+              </div>
+            </div>
+            <div class="stat-ring">
+              <svg viewBox="0 0 120 120">
+                <circle class="ring-bg" cx="60" cy="60" r="52" />
+                <circle id="burnout_ring" class="ring-fg ring-danger" cx="60" cy="60" r="52" stroke-dasharray="326.73" stroke-dashoffset="326.73" />
+              </svg>
+              <div class="ring-label">
+                <strong id="burnout_value">--%</strong>
+                <span>BURNOUT</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Metrics Grid -->
+        <div class="metrics-grid reveal delay-1">
+          <div class="metric-card" id="metric_stagnation">
+            <div class="metric-header">
+              <span class="m-badge m-danger">SAL</span>
+              <span class="metric-name">Salary Stagnation Risk</span>
+            </div>
+            <div class="metric-bar-track">
+              <div class="metric-bar bar-danger" data-metric="salary_stagnation_probability" style="width: 0%"></div>
+            </div>
+            <div class="metric-value" id="val_stagnation">--%</div>
+          </div>
+          <div class="metric-card" id="metric_burnout">
+            <div class="metric-header">
+              <span class="m-badge m-warning">BRN</span>
+              <span class="metric-name">Burnout Risk</span>
+            </div>
+            <div class="metric-bar-track">
+              <div class="metric-bar bar-warning" data-metric="burnout_risk" style="width: 0%"></div>
+            </div>
+            <div class="metric-value" id="val_burnout">--%</div>
+          </div>
+          <div class="metric-card" id="metric_automation">
+            <div class="metric-header">
+              <span class="m-badge m-danger">AUT</span>
+              <span class="metric-name">Automation Pressure</span>
+            </div>
+            <div class="metric-bar-track">
+              <div class="metric-bar bar-danger" data-metric="automation_pressure" style="width: 0%"></div>
+            </div>
+            <div class="metric-value" id="val_automation">--%</div>
+          </div>
+          <div class="metric-card" id="metric_ceiling">
+            <div class="metric-header">
+              <span class="m-badge m-info">CEL</span>
+              <span class="metric-name">Promotion Ceiling</span>
+            </div>
+            <div class="metric-bar-track">
+              <div class="metric-bar" data-metric="promotion_ceiling" style="width: 0%"></div>
+            </div>
+            <div class="metric-value" id="val_ceiling">--%</div>
+          </div>
+          <div class="metric-card" id="metric_decline">
+            <div class="metric-header">
+              <span class="m-badge m-info">DEC</span>
+              <span class="metric-name">Decline Exposure</span>
+            </div>
+            <div class="metric-bar-track">
+              <div class="metric-bar" data-metric="industry_decline_exposure" style="width: 0%"></div>
+            </div>
+            <div class="metric-value" id="val_decline">--%</div>
+          </div>
+        </div>
+
+        <!-- Intel Grid -->
+        <div class="intel-grid reveal delay-1">
+          <article class="intel-card">
+            <header>
+              <h3>/// POSITIVE_SIGNALS</h3>
+              <span>STRENGTHS</span>
+            </header>
+            <ul id="strengths_list" class="intel-list"></ul>
+          </article>
+          <article class="intel-card">
+            <header>
+              <h3>/// WARNING_SIGNALS</h3>
+              <span>RED_FLAGS</span>
+            </header>
+            <ul id="red_flags_list" class="intel-list"></ul>
+          </article>
+        </div>
+
+        <!-- Recommendations & Comparable Trajectories & Survival Tips -->
+        <div class="intel-grid reveal delay-2">
+          <article class="intel-card">
+            <header>
+              <h3>/// ACTION_ITEMS</h3>
+              <span>RECOMMENDATIONS</span>
+            </header>
+            <ul id="recommendations_list" class="intel-list"></ul>
+          </article>
+          <article class="intel-card">
+            <header>
+              <h3>/// ANTI_STAGNATION</h3>
+              <span>SURVIVAL_TIPS</span>
+            </header>
+            <ul id="survival_list" class="intel-list"></ul>
+          </article>
+        </div>
+
+        <!-- Comparable Career Paths (Wide span) -->
+        <article class="reco-panel reveal delay-2">
+          <header>
+            <h3>/// COMPARABLE_ROLE_TRAJECTORIES</h3>
+            <span>COMPARABLE_PATHS</span>
+          </header>
+          <ul id="comparable_list" class="intel-list"></ul>
+        </article>
+
+        <!-- Detailed Narrative Report -->
+        <article class="report-panel reveal delay-2">
+          <h3>/// DETAILED_AUTOPSY_REPORT</h3>
+          <pre id="detailed_report"></pre>
+        </article>
+      </section>
+    </main>
+
+    <footer class="app-footer">
+      <p>CAREER://AUTOPSY v1.0 — Powered by Gemini AI</p>
+    </footer>
+
+    <script src="/static/js/app.js"></script>
+  </body>
+</html>
